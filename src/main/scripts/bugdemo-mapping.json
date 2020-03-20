@@ -1,0 +1,12 @@
+{
+  "mappings": {
+	"properties": {
+	  "key": {
+		"type": "long"
+	  },
+	  "value": {
+		"type": "text"
+	  }
+	}
+  }
+}
