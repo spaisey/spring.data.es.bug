@@ -53,3 +53,13 @@ response and throw an exception. This results in the response:
 `{"timestamp":"2020-03-20T21:31:29.077+0000","path":"/bug/workaround","status":500,"error":"Internal Server Error","message":"{\"error\":{\"root_cause\":[{\"type\":\"query_shard_exception\",\"reason\":\"Can only use wildcard queries on keyword and text fields - not on [key] which is of type [long]\",\"index_uuid\":\"1aL9ONyQSO6r18TKly3k7w\",\"index\":\"bugdemo\"}],\"type\":\"search_phase_execution_exception\",\"reason\":\"all shards failed\",\"phase\":\"query\",\"grouped\":true,\"failed_shards\":[{\"shard\":0,\"index\":\"bugdemo\",\"node\":\"UehNpHIjQIyJ6H5bzDR0AA\",\"reason\":{\"type\":\"query_shard_exception\",\"reason\":\"Can only use wildcard queries on keyword and text fields - not on [key] which is of type [long]\",\"index_uuid\":\"1aL9ONyQSO6r18TKly3k7w\",\"index\":\"bugdemo\"}}]},\"status\":400}","requestId":"06333dd4-4"}`
 This accurately depicts the error.
 
+## Recommendation
+A catch of 4xx in DefaultReactiveElasticsearchClient
+```java
+if (response.statusCode().is4xxClientError()) {
+ ...
+}
+
+I'll raise PR :)
+```
+
